@@ -11,7 +11,7 @@ _rollback(){
 
 rollback(){
     _rollback
-    if [ -z "$1" ];
+    if [ -z "$1" ];then
         echo "Failed: Current kernel did not support this feature"
     fi;
     exit 1
