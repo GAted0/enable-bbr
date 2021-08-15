@@ -26,7 +26,7 @@ echo "Great, kernel support bbr feature, downloading systemd service to your sys
 _rollback
 wget -O /etc/systemd/system/kernel-bbr.service https://raw.githubusercontent.com/wikihost-opensource/enable-bbr/main/kernel-bbr.service
 systemctl start kernel-bbr > /dev/null
-if [ `systemctl is-active kernel-bbr.service` == "active" ];then
+if [ "`systemctl is-active kernel-bbr.service`" == "active" ];then
     systemctl enable kernel-bbr > /dev/null
     echo "Success, bbr kernel feature is enabled"
     exit 0
