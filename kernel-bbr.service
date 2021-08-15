@@ -1,0 +1,17 @@
+[Unit]
+Description=Enable kernel bbr featrue via systemd
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStartPre=/bin/sh -c 'echo $(cat /proc/sys/net/core/default_qdisc) > /run/default_qdisc.old'
+ExecStartPre=/bin/sh -c 'echo $(cat /proc/sys/net/ipv4/tcp_congestion_control) > /run/tcp_congestion_control.old'
+ExecStartPre=/bin/sh -c 'echo "fq" > /proc/sys/net/core/default_qdisc'
+ExecStart=/bin/sh -c 'echo "bbr" > /proc/sys/net/ipv4/tcp_congestion_control'
+ExecStop=/bin/sh -c 'echo $(cat /run/default_qdisc.old) > /proc/sys/net/core/default_qdisc'
+ExecStopPost=/bin/sh -c 'echo $(cat /run/tcp_congestion_control.old) > /proc/sys/net/ipv4/tcp_congestion_control'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
